@@ -1,0 +1,16 @@
+
+.navbar-brand{
+    font-size: 30px;
+}
+
+.navbar-right li a{
+
+}
+
+#side-menu li{
+    font-size: 22px;
+}
+
+.login-error {
+    color: #d70000;
+}
