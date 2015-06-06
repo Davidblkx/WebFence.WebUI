@@ -3,14 +3,23 @@
     font-size: 30px;
 }
 
-.navbar-right li a{
-
-}
-
 #side-menu li{
     font-size: 22px;
 }
 
 .login-error {
     color: #d70000;
+}
+
+.thosts-name{
+    width: 250px;
+}
+
+.thosts-action{
+    width: 135px;
+}
+
+.btn-addHost{
+    font-size: 22px;
+    width: 44px;
 }
