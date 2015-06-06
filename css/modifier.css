@@ -11,15 +11,23 @@
     color: #d70000;
 }
 
+
+/* ====================TABLES STYLES==================== */
+thead tr td{
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .thosts-name{
     width: 250px;
 }
 
 .thosts-action{
-    width: 135px;
+    width: 120px;
 }
 
 .btn-addHost{
     font-size: 22px;
     width: 44px;
 }
+/* ====================TABLES STYLES==================== */

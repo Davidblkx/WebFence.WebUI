@@ -92,9 +92,9 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
                           </a>
                           Hosts
                         </h1>
-                        <table class="table table-hover table-condensed table-hosts">
+                        <table class="table table-hover table-condensed table-hosts table-striped table-bordered no-footer" role="grid">
                             <thead>
-                                <tr>
+                                <tr role="row">
                                     <td class="thosts-name">
                                       Name
                                     </td>
