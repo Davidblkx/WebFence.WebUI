@@ -92,9 +92,9 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
                           </a>
                           Hosts
                         </h1>
-                        <table class="table table-hover table-condensed table-hosts table-striped table-bordered no-footer" role="grid">
+                        <table class="table table-hover table-condensed table-hosts">
                             <thead>
-                                <tr role="row">
+                                <tr>
                                     <td class="thosts-name">
                                       Name
                                     </td>
@@ -150,6 +150,28 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
     </div>
     <!-- /#wrapper -->
 
+    <div class="modal fade" id="HostEditor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Host Editor</h4>
+          </div>
+          <div class="modal-body">
+            <form id="formHostEditor" role="form">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-pencil-square-o"></i></div>
+                <input type="text" class="form-control" id="hostName" placeholder="HostName">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnHostEditor">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- jQuery -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -163,6 +185,12 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
     <script src="js/sb-admin-2.js"></script>
     
     <script src="js/table-host.js"></script>
+    
+    <script>
+      $('.btn-addHost').click(function(){
+         $('#HostEditor').modal(); 
+      });
+    </script>
 
 </body>
 

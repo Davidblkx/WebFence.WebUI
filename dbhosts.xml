@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<hosts>
+  <host id="0" name="TESTE">
+    <address>192.168.1.1</address>
+    <address>192.168.1.2</address>
+    <address>192.168.1.3</address>
+  </host>
+</hosts>

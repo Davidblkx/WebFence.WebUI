@@ -131,7 +131,7 @@ class itemHost{
 
 
 //TESTES
-
+try{
 $test = new dbHosts();
 $test->Init();
 
@@ -151,6 +151,11 @@ $file = new dbHosts();
 $file->Init();
 
 print_r($file);
+}
+catch(Exception $e){
+    print_r($e);
+    echo "error";
+}
 
 
 
