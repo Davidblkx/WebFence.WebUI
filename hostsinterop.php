@@ -8,9 +8,7 @@ class dbHosts{
      *initializes dbHosts
      */
     function Init(){
-
         if(!file_exists('dbhosts.xml')){
-
             $xml = new DOMDocument();
             $xml->appendChild($xml->createElement("hosts"));
             $xml->save("dbhosts.xml");
@@ -23,6 +21,9 @@ class dbHosts{
         $xml->load("dbhosts.xml");
 
         $hosts = $xml->getElementsByTagName("host");
+
+
+
         for($i = 0;$i < $hosts->length; $i++){
 
             if($hosts->item($i) == NULL)
@@ -34,14 +35,16 @@ class dbHosts{
             $itm->Id = $hst->attributes->getNamedItem("id")->nodeValue;
             $itm->Name = $hst->attributes->getNamedItem("name")->nodeValue;
             $addrss = $hst->childNodes;
-            for($j = 0; $j < $addrss->length; $addrss++){
+
+            for($j = 0; $j < $addrss->length; $j++){
 
                 $adrs = $addrss->item($j);
-                if($adrs == NULL) return;
+                if($adrs == NULL) continue;
+                if($adrs->nodeName != "address") continue;
 
-                $itm->Hosts[] = $adrs->nodeValue;
+                if(!empty($adrs->nodeValue))
+                    $itm->Hosts[] = $adrs->nodeValue;
             }
-
             $this->items[$itm->Id] = $itm;
         }
     }
@@ -77,20 +80,21 @@ class dbHosts{
         $itm_id = $this->getById($itm->Id);
         $itm_name = $this->getByName($itm->Name);
 
-        if($itm_id != NULL && $itm_name != NULL){
-            if($itm_id->Id != $itm_name->Id){
-                return;
-            }
-
-            $this->items[$itm->Id] = $itm;
-            $this->save();
-            return;
+        if(empty($itm_id) && !empty($itm_name)){
+            return "NAME IN USE! CHOOSE AN EMPTY NAME";
         }
 
-        $itm->Id = $this->getEmptyId();
+        if(!empty($itm_id) && !empty($itm_name)){
+            return "NAME IN USE! CHOOSE AN EMPTY NAME";
+        }
+
+        if(empty($itm_id)){
+            $itm->Id = $this->getEmptyId();
+        }
+
         $this->items[$itm->Id] = $itm;
         $this->save();
-        return;
+        return "SUCCESS";
     }
     function removeItem($ID){
         unset($this->items[$ID]);
@@ -127,34 +131,6 @@ class itemHost{
     public $Name;
     public $Hosts = array();
 
-}
-
-
-//TESTES
-try{
-$test = new dbHosts();
-$test->Init();
-
-$testItem = new itemHost();
-$testItem->Name = "TESTE";
-$testItem->Hosts[] = "192.168.1.1";
-$testItem->Hosts[] = "192.168.1.2";
-$testItem->Hosts[] = "192.168.1.3";
-
-$test->updateItem($testItem);
-
-print_r($test);
-echo "<br/>";
-
-
-$file = new dbHosts();
-$file->Init();
-
-print_r($file);
-}
-catch(Exception $e){
-    print_r($e);
-    echo "error";
 }
 
 

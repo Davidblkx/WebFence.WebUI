@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('hostsinterop.php');
 if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenticated or not set
     header('Location: login.php');
     exit();
@@ -95,47 +96,44 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
                         <table class="table table-hover table-condensed table-hosts">
                             <thead>
                                 <tr>
+
+                                    <td class="thosts-id">
+                                        ID
+                                    </td>
                                     <td class="thosts-name">
                                       Name
                                     </td>
                                     <td class="thosts-adress">Adress</td>
-                                    <td class="thosts-action">
-                                    </td>
+                                    <td class="thosts-action"></td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>n</td>
-                                    <td>a</td>
-                                    <td class="thosts-action">
-                                      <div class="btn-group" role="group">
-                                        <a class="btn btn-info btn-xs">
-                                        <i class="fa fa-edit"></i>
-                                        Edit
-                                      </a>
-                                      <a class="btn btn-danger btn-xs">
-                                        <i class="fa fa-remove"></i>
-                                        Delete
-                                      </a>
-                                      </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>n</td>
-                                    <td>a</td>
-                                    <td class="thosts-action">
-                                      <div class="btn-group" role="group">
-                                        <a class="btn btn-info btn-xs">
-                                        <i class="fa fa-edit"></i>
-                                        Edit
-                                      </a>
-                                      <a class="btn btn-danger btn-xs">
-                                        <i class="fa fa-remove"></i>
-                                        Delete
-                                      </a>
-                                      </div>
-                                    </td>
-                                </tr>
+                            <?php
+                            $hosts = new dbHosts();
+                            $hosts->Init();
+
+                            foreach($hosts->items as $itm){
+                                $id = $itm->Id;
+                                $name = $itm->Name;
+                                $lst = $itm->Hosts;
+                                $listHosts = '';
+                                foreach($lst as $hName){
+                                    $listHosts = $listHosts.$hName.";";
+                                }
+
+                                echo '<tr data-id="'.$id.'" data-name="'.$name.'">';
+
+                                echo '<td class="host-id">'.$id.'</td>';
+                                echo '<td class="host-name">'.$name.'</td>';
+                                echo '<td class="host-value">'.$listHosts.'</td>';
+                                echo '<td class="thosts-action"><div class="btn-group" role="group">'.
+                                    '<a data-id="'.$id.'" class="btn btn-info btn-xs btnEdit"><i class="fa fa-edit"></i>Edit</a>'.
+                                    '<a data-id="'.$id.'" class="btn btn-danger btn-xs btnRemove"><i class="fa fa-remove"></i>Delete</a>'.
+                                    '</div></td>';
+                                echo '</tr>';
+                            }
+
+                            ?>
                             </tbody>
                         </table>
                     </div>

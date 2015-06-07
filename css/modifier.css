@@ -13,13 +13,20 @@
 
 
 /* ====================TABLES STYLES==================== */
+.table-hosts td{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 thead tr td{
     font-size: 16px;
     font-weight: bold;
 }
 
 .thosts-name{
-    width: 250px;
+    width: 200px;
 }
 
 .thosts-action{
