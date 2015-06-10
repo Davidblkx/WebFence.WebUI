@@ -33,8 +33,48 @@ thead tr td{
     width: 120px;
 }
 
-.btn-addHost{
+.page-header .btn{
     font-size: 22px;
     width: 44px;
 }
+
+.page-header .right{
+    float: right;
+}
+
 /* ====================TABLES STYLES==================== */
+
+
+
+/* =====================FORM HOSTS====================== */
+#formHostEditor .textarea-hosts{
+    resize: none;
+}
+/* =====================FORM HOSTS====================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

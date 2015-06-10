@@ -84,8 +84,8 @@ class dbHosts{
             return "NAME IN USE! CHOOSE AN EMPTY NAME";
         }
 
-        if(!empty($itm_id) && !empty($itm_name)){
-            return "NAME IN USE! CHOOSE AN EMPTY NAME";
+        if(!empty($itm_id) && empty($itm_name)){
+            return "INVALID NAME!";
         }
 
         if(empty($itm_id)){
@@ -111,6 +111,8 @@ class dbHosts{
             $hst->setAttribute("name", $itm->Name);
 
             foreach($itm->Hosts as $nAdr){
+                if(empty($nAdr))
+                    continue;
                 $adr = $xml->createElement("address");
                 $adr->nodeValue = $nAdr;
                 $hst->appendChild($adr);

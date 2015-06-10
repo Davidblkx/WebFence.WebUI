@@ -38,6 +38,10 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
 
 <body>
 
+    <form method="POST" action="action.php?method=removehosts" id="formRemove">
+        <input type="hidden" id="formRemoveId" name="id">
+    </form>
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -88,10 +92,11 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                          <a class="btn btn-success btn-xs btn-addHost">
-                            <i class="fa fa-plus"></i>
-                          </a>
+
                           Hosts
+                            <a class="btn btn-success btn-xs btn-addHost right">
+                                <i class="fa fa-plus"></i>
+                            </a>
                         </h1>
                         <table class="table table-hover table-condensed table-hosts">
                             <thead>
@@ -118,10 +123,11 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
                                 $lst = $itm->Hosts;
                                 $listHosts = '';
                                 foreach($lst as $hName){
-                                    $listHosts = $listHosts.$hName.";";
+                                    $listHosts = $listHosts.$hName."\n";
                                 }
 
-                                echo '<tr data-id="'.$id.'" data-name="'.$name.'">';
+                                echo '<tr data-id="'.$id.'" data-name="'.$name.
+                                    '" data-hosts="'.$listHosts.'" class="host-elem">';
 
                                 echo '<td class="host-id">'.$id.'</td>';
                                 echo '<td class="host-name">'.$name.'</td>';
@@ -148,6 +154,7 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
     </div>
     <!-- /#wrapper -->
 
+    <!-- MODAL -->
     <div class="modal fade" id="HostEditor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -156,11 +163,24 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
             <h4 class="modal-title" id="myModalLabel">Host Editor</h4>
           </div>
           <div class="modal-body">
-            <form id="formHostEditor" role="form">
+            <form id="formHostEditor" role="form" action="action.php?method=updatehosts" method="POST">
+                <!-- ID -->
+                <input type="hidden" name="id" id="form-id" >
+
+                <!-- NAME -->
               <div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-pencil-square-o"></i></div>
-                <input type="text" class="form-control" id="hostName" placeholder="HostName">
+                <input type="text" class="form-control" id="form-name" name="name" placeholder="Name">
               </div>
+
+                <br />
+
+                <!-- Hosts -->
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-globe"></i></div>
+                    <textarea class="form-control textarea-hosts" id="form-hosts" rows="5"
+                              name="hosts" placeholder="Host Address, 1 per line"></textarea>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -186,8 +206,38 @@ if($_SESSION['auth'] != 1 || !isset($_SESSION['user'])){//if user isn't authenti
     
     <script>
       $('.btn-addHost').click(function(){
-         $('#HostEditor').modal(); 
+
+          $('#form-id').val('');
+          $('#form-name').val('');
+          $('#form-hosts').val('');
+
+          $('#HostEditor').modal();
       });
+
+        $('.btnEdit').click(function(){
+            var id = $(this).data('id');
+            $('.host-elem').each(function(index){
+               if( $(this).data('id') === id){
+
+                   $('#form-id').val($(this).data('id'));
+                   $('#form-name').val($(this).data('name'));
+                   $('#form-hosts').val($(this).data('hosts'));
+
+                   $('#HostEditor').modal();
+                   return 1;
+               }
+            });
+        });
+
+        $('#btnHostEditor').click(function(){
+            $('#formHostEditor').submit();
+        });
+
+        $('.btnRemove').click(function(){
+            var id = $(this).data('id');
+            $('#formRemoveId').val(id);
+            $('#formRemove').submit();
+        });
     </script>
 
 </body>
